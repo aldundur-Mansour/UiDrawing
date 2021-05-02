@@ -485,14 +485,21 @@ namespace Draw
                 Debug.WriteLine(sourceString);
                 if (sourceString.Length > 5)
                 {
-                    List<Shape> ehj = lsShapes(sourceString);
-                    textBox1.Text = str;
-                    shapes = new List<Shape>();
-                    foreach (var item in ehj)
+                    try
                     {
-                        shapes.Add(item);
+                        List<Shape> ehj = lsShapes(sourceString);
+                        textBox1.Text = str;
+                        shapes = new List<Shape>();
+                        foreach (var item in ehj)
+                        {
+                            shapes.Add(item);
+
+                        }
+                    }catch
+                    {
 
                     }
+                 
                     tabPage1.Invalidate();
                 }
                 
