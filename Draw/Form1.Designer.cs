@@ -281,9 +281,9 @@ namespace Draw
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label6.Location = new System.Drawing.Point(27, 415);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(445, 20);
+            this.label6.Size = new System.Drawing.Size(433, 20);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Syntax: Shape(x,y,width,height) ; Pen (Color,Thickness,Style,IsFilled)";
+            this.label6.Text = "Syntax: Shape(x,y,width,height)Pen(Color,Thickness,Style,IsFilled);";
             // 
             // label4
             // 
