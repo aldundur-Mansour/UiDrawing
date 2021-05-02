@@ -30,6 +30,10 @@ namespace Draw
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.save = new System.Windows.Forms.Button();
+            this.open = new System.Windows.Forms.Button();
+            this.clear = new System.Windows.Forms.Button();
+            this.fill = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.colorPicker = new System.Windows.Forms.Button();
             this.squSelected = new System.Windows.Forms.Button();
@@ -54,6 +58,10 @@ namespace Draw
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.save);
+            this.groupBox1.Controls.Add(this.open);
+            this.groupBox1.Controls.Add(this.clear);
+            this.groupBox1.Controls.Add(this.fill);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.colorPicker);
             this.groupBox1.Controls.Add(this.squSelected);
@@ -64,14 +72,52 @@ namespace Draw
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.LineTypeList);
-            this.groupBox1.Location = new System.Drawing.Point(2, 68);
+            this.groupBox1.Location = new System.Drawing.Point(797, 1);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Size = new System.Drawing.Size(117, 307);
+            this.groupBox1.Size = new System.Drawing.Size(117, 599);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tools";
+            // 
+            // save
+            // 
+            this.save.Location = new System.Drawing.Point(14, 474);
+            this.save.Name = "save";
+            this.save.Size = new System.Drawing.Size(94, 29);
+            this.save.TabIndex = 9;
+            this.save.Text = "Save";
+            this.save.UseVisualStyleBackColor = true;
+            // 
+            // open
+            // 
+            this.open.Location = new System.Drawing.Point(14, 420);
+            this.open.Name = "open";
+            this.open.Size = new System.Drawing.Size(94, 29);
+            this.open.TabIndex = 8;
+            this.open.Text = "Open";
+            this.open.UseVisualStyleBackColor = true;
+            // 
+            // clear
+            // 
+            this.clear.Location = new System.Drawing.Point(14, 307);
+            this.clear.Name = "clear";
+            this.clear.Size = new System.Drawing.Size(94, 29);
+            this.clear.TabIndex = 7;
+            this.clear.Text = "Clear";
+            this.clear.UseVisualStyleBackColor = true;
+            this.clear.Click += new System.EventHandler(this.clear_Click);
+            // 
+            // fill
+            // 
+            this.fill.Location = new System.Drawing.Point(14, 363);
+            this.fill.Name = "fill";
+            this.fill.Size = new System.Drawing.Size(94, 29);
+            this.fill.TabIndex = 6;
+            this.fill.Text = "Fill";
+            this.fill.UseVisualStyleBackColor = true;
+            this.fill.Click += new System.EventHandler(this.fill_Click);
             // 
             // label5
             // 
@@ -193,10 +239,10 @@ namespace Draw
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(139, 29);
+            this.tabControl1.Location = new System.Drawing.Point(1, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(743, 480);
+            this.tabControl1.Size = new System.Drawing.Size(796, 599);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -205,7 +251,7 @@ namespace Draw
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(735, 447);
+            this.tabPage1.Size = new System.Drawing.Size(788, 566);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Drawings";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -223,7 +269,7 @@ namespace Draw
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(735, 447);
+            this.tabPage2.Size = new System.Drawing.Size(788, 566);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Source ";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -263,8 +309,8 @@ namespace Draw
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 600);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tabControl1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -302,6 +348,10 @@ namespace Draw
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button save;
+        private System.Windows.Forms.Button open;
+        private System.Windows.Forms.Button clear;
+        private System.Windows.Forms.Button fill;
     }
 }
 

@@ -271,7 +271,11 @@ namespace Draw
                 shape.width = shape.endPoint.X - shape.startPoint.X;
                 shape.height = shape.endPoint.Y - shape.startPoint.Y;
                 shape.style = style;
-                shapes.Add(shape);
+                if(shape.startPoint != shape.endPoint)
+                {
+                    shapes.Add(shape);
+                }
+                
 
             }
             ismoving = false;
@@ -401,22 +405,40 @@ namespace Draw
                         sourceCode += $"Lin({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
 
                         textBox1.AppendText(sourceCode + Environment.NewLine);
+                        sourceCode = "";
                     }
                     else if (s is Circle)
                     {
                         sourceCode += $"Crc({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
                         textBox1.AppendText(sourceCode + Environment.NewLine);
+                        sourceCode = "";
                     }
                     else
                     {
                         sourceCode += $"Rec({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
                         textBox1.AppendText(sourceCode + Environment.NewLine);
+                        sourceCode = "";
                     }
                 }
 
                 textBox1.Invalidate(); 
 
             }
+        }
+
+        private void clear_Click(object sender, EventArgs e)
+        {
+            shapes.Clear();
+            tabPage1.Invalidate();
+        }
+
+        private void fill_Click(object sender, EventArgs e)
+        {
+            if (selectedShape != null)
+            {
+                selectedShape.isFill = true;
+            }
+            tabPage1.Invalidate();
         }
     }
     public abstract class Shape
@@ -435,6 +457,7 @@ namespace Draw
         public int dy;
         public int lineDx;
         public int lineDy;
+        public bool isFill = false;
         public List<Point> linePoints { set; get; }
         public abstract void Draw(Graphics g);
         public abstract void move(Point point);
@@ -558,6 +581,13 @@ namespace Draw
             bounds = path.GetBounds();
             pen.DashStyle = this.style;
             g.DrawEllipse(pen, rec);
+            if (isFill)
+            {
+                g.FillEllipse(new SolidBrush(this.penColor), rec);
+                fill = true;
+            }
+
+
         }
         public override void move(Point point)
         {
@@ -578,6 +608,12 @@ namespace Draw
             path.AddRectangle(rec);
             bounds = path.GetBounds();
             g.DrawRectangle(pen, rec);
+            if (isFill)
+            {
+                g.FillRectangle(new SolidBrush(this.penColor), rec);
+                fill = true;
+            }
+
         }
         public override void move(Point point)
         {
