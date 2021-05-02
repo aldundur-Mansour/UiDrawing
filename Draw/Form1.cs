@@ -121,6 +121,7 @@ namespace Draw
             if (LineTypeList.SelectedItem.ToString() == "Solid")
             {
                 style = DashStyle.Solid;
+                
             }
             else if (LineTypeList.SelectedItem.ToString() == "Dash")
             {

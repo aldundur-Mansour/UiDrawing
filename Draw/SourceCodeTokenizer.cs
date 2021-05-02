@@ -227,7 +227,7 @@ namespace Draw
 
                 string value = "";
                 Console.WriteLine("We are in");
-                List<string> styles = new List<string> { "DASH", "SOLID", "DOT" };
+                List<string> styles = new List<string> { "DASH", "SOLID", "DOT" ,"DASHDOT"};
                 List<string> truth = new List<string> { "TRUE", "FALSE" };
 
                 for (int i = 0; i < 3; i++)
