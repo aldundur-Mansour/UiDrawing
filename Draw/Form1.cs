@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace Draw
@@ -57,6 +60,40 @@ namespace Draw
                 colorPicker.BackColor = colorDialog1.Color;
                 colorPicker.BackColor = colorDialog1.Color;
                 pen = new Pen(colorDialog1.Color, 3);
+            }
+        }
+
+        public void fileSave()
+        {
+            try
+            {
+                FileStream fs = new FileStream("draw.drw", FileMode.OpenOrCreate);
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(fs, shapes);
+            fs.Close();
+                Invalidate();
+            }
+            catch
+            {
+                //Invalid file format or corrupted file message here
+                //Show error message box
+            }
+
+        }
+        public void fileLoad()
+        {
+            try
+            {
+                FileStream fs = new FileStream("draw.drw", FileMode.Open);
+                BinaryFormatter bf = new BinaryFormatter();
+                shapes = (List<Shape>)bf.Deserialize(fs);
+                fs.Close();
+                Invalidate();
+            }
+            catch
+            {
+                //Invalid file format or corrupted file message here
+                //Show error message box
             }
         }
 
@@ -440,7 +477,19 @@ namespace Draw
             }
             tabPage1.Invalidate();
         }
+
+        private void save_Click(object sender, EventArgs e)
+        {
+            fileSave();
+        }
+
+        private void open_Click(object sender, EventArgs e)
+        {
+            fileLoad();
+            Invalidate();
+        }
     }
+    [Serializable()]
     public abstract class Shape
     {
         public Color penColor;
@@ -457,7 +506,7 @@ namespace Draw
         public int dy;
         public int lineDx;
         public int lineDy;
-        public bool isFill = false;
+        public bool isFill;
         public List<Point> linePoints { set; get; }
         public abstract void Draw(Graphics g);
         public abstract void move(Point point);
@@ -551,6 +600,7 @@ namespace Draw
             return topBorderPoints;
         }
     }
+    [Serializable()]
     public class Line : Shape
     {
         public override void Draw(Graphics g)
@@ -570,6 +620,7 @@ namespace Draw
             this.endPoint.Y = point.Y - this.lineDy;
         }
     }
+    [Serializable()]
     public class Circle : Shape
     {
         public override void Draw(Graphics g)
@@ -596,6 +647,7 @@ namespace Draw
         }
 
     }
+    [Serializable()]
     public class Rect : Shape
     {
         public override void Draw(Graphics g)

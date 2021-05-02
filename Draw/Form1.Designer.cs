@@ -89,6 +89,7 @@ namespace Draw
             this.save.TabIndex = 9;
             this.save.Text = "Save";
             this.save.UseVisualStyleBackColor = true;
+            this.save.Click += new System.EventHandler(this.save_Click);
             // 
             // open
             // 
@@ -98,6 +99,7 @@ namespace Draw
             this.open.TabIndex = 8;
             this.open.Text = "Open";
             this.open.UseVisualStyleBackColor = true;
+            this.open.Click += new System.EventHandler(this.open_Click);
             // 
             // clear
             // 
@@ -193,8 +195,7 @@ namespace Draw
             "6",
             "7",
             "8",
-            "9",
-            "10"});
+            "9"});
             this.LineSize.Location = new System.Drawing.Point(7, 129);
             this.LineSize.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.LineSize.Name = "LineSize";
