@@ -20,7 +20,7 @@ Color &rarr; Should be a valid Color Name
 
 Thickness &rarr; 1-9 
 
-Style &rarr; You can use either ("Dot", "Dash","Solid")
+Style &rarr; You can use either ("Dot", "Dash","Solid","DashDot")
 
 isFilled &rarr; bool to determine filling property 
 
@@ -41,4 +41,4 @@ isFilled &rarr; bool to determine filling property
 
 4- معتز العجلان 
 
-5- منصور آل دندور
+5- منصور آل دندور (Mansovic)
