@@ -71,7 +71,6 @@ namespace Draw
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(fs, shapes);
             fs.Close();
-                Invalidate();
             }
             catch
             {
@@ -88,7 +87,6 @@ namespace Draw
                 BinaryFormatter bf = new BinaryFormatter();
                 shapes = (List<Shape>)bf.Deserialize(fs);
                 fs.Close();
-                Invalidate();
             }
             catch
             {
@@ -486,7 +484,7 @@ namespace Draw
         private void open_Click(object sender, EventArgs e)
         {
             fileLoad();
-            Invalidate();
+            tabPage1.Invalidate();
         }
     }
     [Serializable()]
