@@ -74,8 +74,7 @@ namespace Draw
             }
             catch
             {
-                //Invalid file format or corrupted file message here
-                //Show error message box
+                MessageBox.Show("Error in file path");
             }
 
         }
@@ -90,8 +89,7 @@ namespace Draw
             }
             catch
             {
-                //Invalid file format or corrupted file message here
-                //Show error message box
+                MessageBox.Show("Error in file path");
             }
         }
 
@@ -400,8 +398,8 @@ namespace Draw
         {
             if(tabControl1.SelectedIndex == 0)
             {
-                Debug.WriteLine(sourceString);
-
+               
+                
               //  sourceString = sourceString.Trim();
                 Tokenizer t = new Tokenizer(new Input(sourceString.Trim()), new Tokenizable[] {
                      new NewLineTokenizer(true),
@@ -409,17 +407,21 @@ namespace Draw
                
             });
                 Token token = t.tokenize();
-
+                error = false;
                 while (token != null && t.input.hasMore())
                 {
                     if(token.Value == "invalid" && t.input.hasMore())
                     {
                      
-                        Debug.WriteLine("ERROR! in the source code at line :" + token.LineNumber);
-                        error = true; 
+                       
+                        MessageBox.Show("ERROR! in the source code at line :" + token.LineNumber);
+                        error = true;
+                        tabPage1.Hide();
                         break; 
 
-                    }                 
+                    }
+                     
+                   
                     token = t.tokenize();
                 }
 
@@ -428,36 +430,44 @@ namespace Draw
             }
             else
             {
-                textBox1.Clear();
-                foreach (var s in shapes)
+               
+                if (!error)
                 {
-
-                    string sourceCode = "";
-
-                    if (s is Line)
+                    textBox1.Clear();
+             
+                    foreach (var s in shapes)
                     {
 
-                        sourceCode += $"Lin({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
+                        string sourceCode = "";
 
-                        textBox1.AppendText(sourceCode + Environment.NewLine);
-                        sourceCode = "";
+                        if (s is Line)
+                        {
+
+                            sourceCode += $"Lin({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
+
+                            textBox1.AppendText(sourceCode + Environment.NewLine);
+                            sourceCode = "";
+                        }
+                        else if (s is Circle)
+                        {
+                            sourceCode += $"Crc({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
+                            textBox1.AppendText(sourceCode + Environment.NewLine);
+                            sourceCode = "";
+                        }
+                        else
+                        {
+                            sourceCode += $"Rec({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
+                            textBox1.AppendText(sourceCode + Environment.NewLine);
+                            sourceCode = "";
+                        }
                     }
-                    else if (s is Circle)
-                    {
-                        sourceCode += $"Crc({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
-                        textBox1.AppendText(sourceCode + Environment.NewLine);
-                        sourceCode = "";
-                    }
-                    else
-                    {
-                        sourceCode += $"Rec({s.startPoint.X},{s.startPoint.Y},{s.endPoint.X},{s.endPoint.Y})Pen({s.penColor.Name},{s.thickness},{s.style},{s.fill});";
-                        textBox1.AppendText(sourceCode + Environment.NewLine);
-                        sourceCode = "";
-                    }
+                    textBox1.Invalidate();
+
                 }
+                
 
-                textBox1.Invalidate(); 
-
+                  
+                
             }
         }
 
