@@ -395,13 +395,109 @@ namespace Draw
 
         }
 
+        public List<Shape> lsShapes(string s)
+        {
+                s = s.TrimEnd(); 
+                Debug.WriteLine(s);
+                List<Shape> ls5 = new List<Shape>();
+                //string s5 = "rec(0,0,0,0)Pen(blue,5,dot,true);\r\nrec(100,100,200,200)Pen(blue,5,dot,true);";
+                List<string> ls = new List<string>();
+                string dim = "";
+                foreach (var item in s.Split(Environment.NewLine))
+                {
+                    ls.Add(item);
+                }
+                Shape sh = new Circle();
+                foreach (var item in ls)
+                {
+           
+                    string st = item[0..3];
+                    if (st.ToUpper() == "REC")
+                    {
+                        sh = new Rect();
+                    }
+                    else if (st.ToUpper() == "LIN")
+                    {
+                        sh = new Line();
+                    }
+                    else if (st.ToUpper() == "CRC")
+                    {
+                        sh = new Circle();
+                    }
+                    int i = 4;
+                    dim = "";
+                    while (item[i] != ')')
+                    {
+                        dim += item[i];
+                        i++;
+                    }
+                    string[] str = dim.Split(',');
+                    sh.startPoint.X = Convert.ToInt32(str[0]);
+                    sh.startPoint.Y = Convert.ToInt32(str[1]);
+                    sh.endPoint.X = Convert.ToInt32(str[2]);
+                    sh.endPoint.Y = Convert.ToInt32(str[3]);
+                    i += 5;
+                    string str2 = "";
+                    while (item[i] != ')')
+                    {
+                        str2 += item[i];
+                        i++;
+                    }
+                    string[] str3 = str2.Split(',');
+                    sh.penColor = Color.FromName(str3[0]); //to be fixed to get from hex
+                    sh.thickness = Convert.ToInt32(str3[1]);
+                    if (str3[2].ToUpper() == "DOT")
+                    {
+                        sh.style = DashStyle.Dot;
+                    }
+                    else if (str3[2].ToUpper() == "DASH")
+                    {
+                        sh.style = DashStyle.Dash;
+                    }
+                    else if (str3[2].ToUpper() == "SOLID")
+                    {
+                        sh.style = DashStyle.Solid;
+                    }
+                    else if (str3[2].ToUpper() == "DASHDOT")
+                    {
+                        sh.style = DashStyle.DashDot;
+                    }
+                    sh.fill = bool.Parse(str3[3]);
+                    sh.width = sh.endPoint.X - sh.startPoint.X;
+                    sh.height = sh.endPoint.Y - sh.startPoint.Y;
+                    Debug.WriteLine("mr" + sh.style);
+                    ls5.Add(sh);
+                    
+                    //shapes.Add(sh); 
+                    //Console.WriteLine($"{color} , {thikness} , {style} , {fill}");
+                
+                }
+           
+            return ls5;
+        }
+
+
+
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(tabControl1.SelectedIndex == 0)
             {
-               
+                Debug.WriteLine(sourceString);
+                if (sourceString.Length > 5)
+                {
+                    List<Shape> ehj = lsShapes(sourceString);
+                    textBox1.Text = str;
+                    shapes = new List<Shape>();
+                    foreach (var item in ehj)
+                    {
+                        shapes.Add(item);
+
+                    }
+                    tabPage1.Invalidate();
+                }
                 
-              //  sourceString = sourceString.Trim();
+                
+                //  sourceString = sourceString.Trim();
                 Tokenizer t = new Tokenizer(new Input(sourceString.Trim()), new Tokenizable[] {
                      new NewLineTokenizer(true),
                      new sourceCodeTokenozer()
@@ -431,7 +527,7 @@ namespace Draw
             }
             else
             {
-               
+                textBox1.Text = str;
                 if (!error)
                 {
                     textBox1.Clear();
@@ -463,7 +559,11 @@ namespace Draw
                         }
                     }
                     textBox1.Invalidate();
-
+                    if (str == "")
+                    {
+                        str = sourceString;
+                    }
+                    
                 }
                 
 
@@ -471,7 +571,7 @@ namespace Draw
                 
             }
         }
-
+        string str = "";
         private void clear_Click(object sender, EventArgs e)
         {
             shapes.Clear();
@@ -482,7 +582,7 @@ namespace Draw
         {
             if (selectedShape != null)
             {
-                selectedShape.isFill = true;
+                selectedShape.fill = true;
             }
             tabPage1.Invalidate();
         }
@@ -641,10 +741,9 @@ namespace Draw
             bounds = path.GetBounds();
             pen.DashStyle = this.style;
             g.DrawEllipse(pen, rec);
-            if (isFill)
+            if (this.fill)
             {
                 g.FillEllipse(new SolidBrush(this.penColor), rec);
-                fill = true;
             }
 
 
@@ -669,10 +768,10 @@ namespace Draw
             path.AddRectangle(rec);
             bounds = path.GetBounds();
             g.DrawRectangle(pen, rec);
-            if (isFill)
+            if (this.fill)
             {
                 g.FillRectangle(new SolidBrush(this.penColor), rec);
-                fill = true;
+                
             }
 
         }
